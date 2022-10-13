@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <video autoplay playsInline muted></video>
+  <style>
+    html, body { padding: 0; margin: 0; }
+    video { width: 600px }
+  </style>
+  <script>
+    const $ = (q) => document.querySelector(q)
+    const main = async () => {
+      const stream = await navigator.mediaDevices.getUserMedia({ video: true })
+      const videoEl = $('video')
+      videoEl.srcObject = stream
+      videoEl.load()
+
+      window.onmessage = (ev) => {
+        const p = document.createElement('p')
+        p.innerText = JSON.stringify(ev.data)
+        document.body.append(p)
+      }
+    }
+    main()
+  </script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <button id="mount-btn">mount iframe</button>
+  <button id="unmount-btn">unmount iframe</button>
+  <button id="post-btn">post message</button>
+  <style>
+    html, body { padding: 0; margin: 0; }
+    body { width: 100vw; height: 100vh; }
+  </style>
+  <script>
+    const $ = (q) => document.querySelector(q)
+    const main = () => {
+      const mountButtonEl = $('#mount-btn')
+      const unmountButtonEl = $('#unmount-btn')
+      const postButtonEl = $('#post-btn')
+
+      mountButtonEl.onclick = () => {
+        const iframe = document.createElement('iframe')
+        iframe.src = 'http://localhost:3000'
+        // https://stackoverflow.com/questions/57008648/accessing-camera-and-mic-in-sandboxed-iframe-from-different-subdomain
+        iframe.allow = 'camera *; microphone *'
+        iframe.style = 'position:fixed; top:0; left:0; width:100%; height:100%; z-index: -1'
+        // iframe.sandbox = 'allow-same-origin allow-scripts'
+
+        // todo: https://jsfiddle.net/Twisty/3rjy0efa/1/
+        // iframe에 drag and drop을 연동?
+
+        document.body.appendChild(iframe)
+      }
+      unmountButtonEl.onclick = () => {
+        const iframe = $('iframe')
+        iframe.remove()
+      }
+      postButtonEl.onclick = () => {
+        const iframe = $('iframe')
+        iframe.contentWindow.postMessage({ token: 'hello world'}, 'http://localhost:3000')
+      }
+    }
+    main()
+  </script>
+</body>
+</html>

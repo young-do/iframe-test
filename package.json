@@ -1,0 +1,14 @@
+{
+  "name": "iframe-test",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "dev": "yarn dev:child | yarn dev:parent",
+    "dev:child": "serve child -p 3000",
+    "dev:parent": "serve parent -p 5000"
+  },
+  "dependencies": {
+    "serve": "^14.0.1"
+  }
+}
